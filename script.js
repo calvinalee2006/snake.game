@@ -7,6 +7,7 @@ window.onload = function () {
     canvasContext = canvas.getContext('2d');
 
     drawEverything();
+    drawRect();
 }
 
 function drawEverything() {
@@ -18,13 +19,28 @@ function drawEverything() {
     //Make a pink rectangle
     canvasContext.fillStyle = 'rgba(255,105,180, 1.0)'
     canvasContext.fillRect(100, 100, 100, 100);
-
-    let pattern = canvasContext.createPattern(canvas, 'repeat');
-    canvasContext.fillStyle = pattern;
-    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-
-    document.body.appendChild(canvas);
 }
+// figure out why loop is only going to one color
+function drawRect(x, y, width, height, color) {
+    canvasContext.fillStyle = color;
+    canvasContext.fillRect(x, y, width, height)
+
+    for (let i = 0; i < canvas.width; i += 200) {
+        for (let j = 0; j < canvas.height; j += 200) {
+            canvasContext.fillRect(i, j, 100, 100, 'rgba(0,255,255,1.0');
+        }
+    }
+
+    for (let i = 100; i < canvas.width; i += 200) {
+        for (let j = 100; j < canvas.height; j += 200) {
+            canvasContext.fillRect(i, j, 100, 100, 'rgba(255,105,180,1.0)');
+        }
+    }
+}
+
+
+
+
 
 // canvasContext.strokeStyle = "black";
     // canvasContext.fillStyle = "blue";
