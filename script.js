@@ -1,16 +1,16 @@
-//Drawing of the canvas
+//Drawing of canvas
 let canvas;
 let canvasContext;
 
-//Drawing of the snake 
+//Drawing of snake
 let tileCount = 20;
 let tileSize = 18;
 let headX = 10;
 let headY = 10;
 
-//control of the snake
-var rightPressed = false;
-var leftPressed = false;
+//Moving the snake
+let xVelocity = 0;
+let yVelocity = 0;
 
 
 window.onload = function () {
@@ -21,6 +21,7 @@ window.onload = function () {
     setInterval(function () {
         drawGameBoard();
         drawSnake();
+        snakeDirection();
         drawApple();
     }, 1000 / framesPerSecond);
 }
@@ -31,15 +32,44 @@ function drawGameBoard() {
 }
 
 function drawSnake() {
-    canvasContext.fillStyle = 'black';
+    canvasContext.fillStyle = 'green';
     canvasContext.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+}
+
+function snakeDirection() {
+    headX = headX + xVelocity;
+    headY = headY + yVelocity;
+}
+
+document.addEventListener("keydown", moveSnake);
+
+function moveSnake(event) {
+    //up
+    if (event.keyCode == 38) {
+        yVelocity = -1;
+        xVelocity = 0;
+    }
+    //down
+    if (event.keyCode == 40) {
+        yVelocity = 1;
+        xVelocity = 0;
+    }
+    // left
+    if (event.keyCode == 37) {
+        yVelocity = 0;
+        xVelocity = -1;
+    }
+    // right
+    if (event.keyCode == 39) {
+        yVelocity = 0;
+        xVelocity = 1;
+    }
 }
 
 function drawApple() {
     canvasContext.fillStyle = 'red';
     canvasContext.fillRect(600, 250, 20, 20);
 }
-
 
 
 
