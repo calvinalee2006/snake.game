@@ -2,15 +2,22 @@
 let canvas;
 let canvasContext;
 
-//Drawing of snake
+//Drawing of snake head
 let tileCount = 20;
 let tileSize = 18;
 let headX = 10;
 let headY = 10;
 
+//Drawing of the snake body
+let snake = [{ x: 200, y: 250 },
+{ x: 180, y: 250 },
+{ x: 160, y: 250 },
+{ x: 140, y: 250 }
+];
+
 //Moving the snake
-let xVelocity = 0;
-let yVelocity = 0;
+let xVelocity = 10;
+let yVelocity = 0
 
 
 window.onload = function () {
@@ -21,7 +28,7 @@ window.onload = function () {
     setInterval(function () {
         drawGameBoard();
         drawSnake();
-        snakeDirection();
+        // snakeDirection();
         drawApple();
     }, 1000 / framesPerSecond);
 }
@@ -32,8 +39,10 @@ function drawGameBoard() {
 }
 
 function drawSnake() {
-    canvasContext.fillStyle = 'green';
-    canvasContext.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+    snake.forEach((snakePart) => {
+        canvasContext.fillStyle = "green";
+        canvasContext.fillRect(snakePart.x, snakePart.y, tileSize, tileSize);
+    });
 }
 
 function snakeDirection() {
@@ -70,6 +79,8 @@ function drawApple() {
     canvasContext.fillStyle = 'red';
     canvasContext.fillRect(600, 250, 20, 20);
 }
+
+
 
 
 
