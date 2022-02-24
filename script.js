@@ -4,9 +4,6 @@ let canvasContext;
 
 //Drawing of snake head
 let tileCount = 20;
-let tileSize = 18;
-let headX = 10;
-let headY = 10;
 
 //Drawing of the snake body
 let snake = [{ x: 200, y: 250 },
@@ -15,10 +12,7 @@ let snake = [{ x: 200, y: 250 },
 { x: 140, y: 250 }
 ];
 
-//Moving the snake
-let xVelocity = 10;
-let yVelocity = 0
-
+let snakeDirection = null;
 
 window.onload = function () {
     canvas = document.getElementById('gameCanvas');
@@ -30,7 +24,9 @@ window.onload = function () {
         drawSnake();
         // snakeDirection();
         drawApple();
-    }, 1000 / framesPerSecond);
+        moveSnake();
+        console.log('running')
+    }, 500);
 }
 
 function drawGameBoard() {
@@ -45,33 +41,59 @@ function drawSnake() {
     });
 }
 
-function snakeDirection() {
-    headX = headX + xVelocity;
-    headY = headY + yVelocity;
-}
+document.addEventListener("keydown", setSnakeDirection);
 
-document.addEventListener("keydown", moveSnake);
-
-function moveSnake(event) {
+function setSnakeDirection(event) {
     //up
-    if (event.keyCode == 38) {
-        yVelocity = -1;
-        xVelocity = 0;
+    if (event.key === 'ArrowUp') {
+        if (snakeDirection !== "down") {
+            snakeDirection = "up";
+        }
     }
     //down
-    if (event.keyCode == 40) {
-        yVelocity = 1;
-        xVelocity = 0;
+    if (event.key === 'ArrowDown') {
+        if (snakeDirection !== "up") {
+            snakeDirection = "down";
+        }
     }
     // left
-    if (event.keyCode == 37) {
-        yVelocity = 0;
-        xVelocity = -1;
+    if (event.key === "ArrowLeft") {
+        if (snakeDirection !== "right") {
+            snakeDirection = "left";
+        }
     }
     // right
-    if (event.keyCode == 39) {
-        yVelocity = 0;
-        xVelocity = 1;
+    if (event.key === "ArrowRight") {
+        if (snakeDirection !== "left") {
+            snakeDirection = "right";
+        }
+    }
+}
+
+function moveSnake() {
+    if (!snakeDirection) return;
+
+    //play with code!! forEach?
+    for (let i = snake.length - 1; i > 0; i--) {
+        const previousPartIndex = i - 1;
+        const previousPart = snake[previousPartIndex]
+        snake[i] = Object.assign({}, previousPart)
+    }
+
+    if (snakeDirection === "up") {
+        snake[0].y -= tileCount
+    }
+
+    if (snakeDirection === "down") {
+        snake[0].y += tileCount
+    }
+
+    if (snakeDirection === "right") {
+        snake[0].x += tileCount
+    }
+
+    if (snakeDirection === "left") {
+        snake[0].x -= tileCount
     }
 }
 
@@ -80,7 +102,9 @@ function drawApple() {
     canvasContext.fillRect(600, 250, 20, 20);
 }
 
-
+//work on the apple and eating the apple
+//scoring
+//boarder /boundries
 
 
 
