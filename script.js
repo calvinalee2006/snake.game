@@ -1,9 +1,10 @@
 //Drawing of canvas
-let canvas;
-let canvasContext;
+let canvas = document.getElementById('gameCanvas');
+let canvasContext = canvas.getContext('2d');
 
 //Drawing of snake head
 let tileCount = 20;
+let tileSize = 18;
 
 //Drawing of the snake body
 let snake = [{ x: 200, y: 250 },
@@ -14,18 +15,19 @@ let snake = [{ x: 200, y: 250 },
 
 let snakeDirection = null;
 
-window.onload = function () {
-    canvas = document.getElementById('gameCanvas');
-    canvasContext = canvas.getContext('2d');
+// Apple
+let apple = {
+    x: Math.floor(Math.random() * canvas.height), y: Math.floor(Math.random() * canvas.width)
+}
 
+window.onload = function () {
     let framesPerSecond = 30;
     setInterval(function () {
         drawGameBoard();
         drawSnake();
-        // snakeDirection();
         drawApple();
+        snakeEatsApple();
         moveSnake();
-        console.log('running')
     }, 500);
 }
 
@@ -70,10 +72,11 @@ function setSnakeDirection(event) {
     }
 }
 
+
 function moveSnake() {
     if (!snakeDirection) return;
 
-    //play with code!! forEach?
+    //play with code!! 
     for (let i = snake.length - 1; i > 0; i--) {
         const previousPartIndex = i - 1;
         const previousPart = snake[previousPartIndex]
@@ -99,13 +102,21 @@ function moveSnake() {
 
 function drawApple() {
     canvasContext.fillStyle = 'red';
-    canvasContext.fillRect(600, 250, 20, 20);
+    canvasContext.fillRect(apple.x, apple.y, 20, 20);
+}
+
+function snakeEatsApple() {
+    if (snake[0].x === apple.x && snake[0].y === apple.y) {
+        apple = {
+            x: Math.floor(Math.random() * canvas.height),
+            y: Math.floor(Math.random() * canvas.width)
+        }
+    }
 }
 
 //work on the apple and eating the apple
 //scoring
-//boarder /boundries
-
+//boarder
 
 
 // drawRect(0, 0, canvas.width, canvas.height, "white")
