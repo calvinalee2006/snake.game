@@ -7,17 +7,17 @@ let tileCount = 20;
 let tileSize = 18;
 
 //Drawing of the snake body
-let snake = [{ x: 200, y: 250 },
-{ x: 180, y: 250 },
-{ x: 160, y: 250 },
-{ x: 140, y: 250 }
+let snake = [{ x: 200, y: 240 },
+{ x: 180, y: 240 },
+{ x: 160, y: 240 },
+{ x: 140, y: 240 }
 ];
 
 let snakeDirection = null;
 
 // Apple
 let apple = {
-    x: Math.floor(Math.random() * canvas.height), y: Math.floor(Math.random() * canvas.width)
+    x: Math.floor(Math.random() * (canvas.width / 2)) * 20, y: Math.floor(Math.random() * (canvas.height / 20)) * 20
 }
 
 window.onload = function () {
@@ -108,8 +108,8 @@ function drawApple() {
 function snakeEatsApple() {
     if (snake[0].x === apple.x && snake[0].y === apple.y) {
         apple = {
-            x: Math.floor(Math.random() * canvas.height),
-            y: Math.floor(Math.random() * canvas.width)
+            x: Math.floor(Math.random() * (canvas.width / 20) * 20),
+            y: Math.floor(Math.random() * (canvas.height / 20) * 20)
         }
     }
 }
