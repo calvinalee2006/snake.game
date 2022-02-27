@@ -17,7 +17,7 @@ let snakeDirection = null;
 
 // Apple
 let apple = {
-    x: Math.floor(Math.random() * (canvas.width / 2)) * 20, y: Math.floor(Math.random() * (canvas.height / 20)) * 20
+    x: Math.floor(Math.random() * (canvas.width / 20)) * 20, y: Math.floor(Math.random() * (canvas.height / 20)) * 20
 }
 
 window.onload = function () {
