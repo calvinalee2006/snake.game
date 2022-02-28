@@ -3,7 +3,6 @@ let canvas = document.getElementById('gameCanvas');
 let canvasContext = canvas.getContext('2d');
 
 let score = 0;
-let hitBody = false;
 
 //Drawing of snake head
 let tileCount = 20;
@@ -27,6 +26,8 @@ let apple = {
 
 
 window.onload = function () {
+
+
     let framesPerSecond = 30;
     setInterval(function () {
         drawGameBoard();
@@ -34,8 +35,8 @@ window.onload = function () {
         drawApple();
         snakeScore()
         snakeEatsApple();
+        gameBoarder();
         moveSnake();
-        gameOver();
     }, 2500 / framesPerSecond);
 }
 
@@ -44,15 +45,20 @@ function drawGameBoard() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-function gameOver() {
-    for (let i = 4; i < snake.length; i++) {
-        let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y
-        if (hitBody === true);
-        return "game over"
+function gameBoarder() {
+    if (snake[0].x < canvas.width) {
+        return "Game Over"
     }
-
-
 }
+
+
+// function gameOver() {
+//     for (let i = 0; i < snake.length; i++) {
+//         let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y
+//         if (hitBody === true);
+
+//     }
+// }
 
 function drawSnake() {
     snake.forEach((snakePart) => {
@@ -127,7 +133,6 @@ function snakeEatsApple() {
         apple = {
             x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20,
             y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20,
-
         }
         score++;
     }
