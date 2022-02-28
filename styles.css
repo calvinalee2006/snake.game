@@ -2,9 +2,15 @@ body{
     width: 90%;
     margin: auto;
     overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #gameCanvas { 
+    display: flex;
     border: 5px solid #000;  
 }
 

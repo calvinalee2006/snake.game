@@ -18,6 +18,8 @@ let snakeLength = [];
 
 let snakeDirection = null;
 
+let hitBody = false;
+
 // Apple
 let apple = {
     x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20, y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20
@@ -27,7 +29,7 @@ let apple = {
 
 window.onload = function () {
 
-
+    // look into clearInterval
     let framesPerSecond = 30;
     setInterval(function () {
         drawGameBoard();
@@ -36,7 +38,11 @@ window.onload = function () {
         snakeScore()
         snakeEatsApple();
         moveSnake();
-
+        hitSnake();
+        if (wallCheck()) {
+            alert("Game Over")
+            console.log("Game Over-Hit the wall!")
+        }
     }, 2500 / framesPerSecond);
 }
 
@@ -45,13 +51,22 @@ function drawGameBoard() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-function gameOver() {
-    for (let i = 4; i < snake.length; i++) {
+function hitSnake() {
+    for (let i = 1; i < snake.length; i++) {
         let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
         if (hitBody === true) {
+            alert("game over")
             console.log("game over");
         }
     }
+}
+
+function wallCheck() {
+    const hitLeftWall = snake[0].x < 0;
+    const hitRightWall = snake[0].x > canvas.width;
+    const hitTopWall = snake[0].y < 0;
+    const hitBottomWall = snake[0].y > canvas.height;
+    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
 }
 
 function drawSnake() {
@@ -129,17 +144,16 @@ function snakeEatsApple() {
             y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20,
         }
         score++;
+
+        //Only grows after the second time getting the apple
+        let newHead = {
+            x: snake[0].x,
+            y: snake[0].y
+        }
+        snake.push(newHead);
     }
-    else {
-        snake.pop();
-    }
-    //Only grows after the second time getting the apple
-    let newHead = {
-        x: snake[0].x,
-        y: snake[0].y
-    }
-    snake.unshift(newHead);
 };
+
 
 function snakeScore() {
     canvasContext.font = "18px Arial";
