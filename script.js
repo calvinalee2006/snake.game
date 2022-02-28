@@ -35,8 +35,8 @@ window.onload = function () {
         drawApple();
         snakeScore()
         snakeEatsApple();
-        gameBoarder();
         moveSnake();
+
     }, 2500 / framesPerSecond);
 }
 
@@ -45,20 +45,14 @@ function drawGameBoard() {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
 }
 
-function gameBoarder() {
-    if (snake[0].x < canvas.width) {
-        return "Game Over"
+function gameOver() {
+    for (let i = 4; i < snake.length; i++) {
+        let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
+        if (hitBody === true) {
+            console.log("game over");
+        }
     }
 }
-
-
-// function gameOver() {
-//     for (let i = 0; i < snake.length; i++) {
-//         let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y
-//         if (hitBody === true);
-
-//     }
-// }
 
 function drawSnake() {
     snake.forEach((snakePart) => {
