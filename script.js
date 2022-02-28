@@ -2,6 +2,9 @@
 let canvas = document.getElementById('gameCanvas');
 let canvasContext = canvas.getContext('2d');
 
+let score = 0;
+let hitBody = false;
+
 //Drawing of snake head
 let tileCount = 20;
 let tileSize = 18;
@@ -9,16 +12,19 @@ let tileSize = 18;
 //Drawing of the snake body
 let snake = [{ x: 200, y: 240 },
 { x: 180, y: 240 },
-{ x: 160, y: 240 },
-{ x: 140, y: 240 }
+{ x: 160, y: 240 }
 ];
+
+let snakeLength = [];
 
 let snakeDirection = null;
 
 // Apple
 let apple = {
-    x: Math.floor(Math.random() * (canvas.width / 20)) * 20, y: Math.floor(Math.random() * (canvas.height / 20)) * 20
+    x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20, y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20
 }
+
+
 
 window.onload = function () {
     let framesPerSecond = 30;
@@ -26,14 +32,26 @@ window.onload = function () {
         drawGameBoard();
         drawSnake();
         drawApple();
+        snakeScore()
         snakeEatsApple();
         moveSnake();
-    }, 500);
+        gameOver();
+    }, 2500 / framesPerSecond);
 }
 
 function drawGameBoard() {
     canvasContext.fillStyle = 'white';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
+}
+
+function gameOver() {
+    for (let i = 4; i < snake.length; i++) {
+        let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y
+        if (hitBody === true);
+        return "game over"
+    }
+
+
 }
 
 function drawSnake() {
@@ -72,7 +90,6 @@ function setSnakeDirection(event) {
     }
 }
 
-
 function moveSnake() {
     if (!snakeDirection) return;
 
@@ -108,14 +125,40 @@ function drawApple() {
 function snakeEatsApple() {
     if (snake[0].x === apple.x && snake[0].y === apple.y) {
         apple = {
-            x: Math.floor(Math.random() * (canvas.width / 20) * 20),
-            y: Math.floor(Math.random() * (canvas.height / 20) * 20)
+            x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20,
+            y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20,
+
         }
+        score++;
     }
+    else {
+        snake.pop();
+    }
+    //Only grows after the second time getting the apple
+    let newHead = {
+        x: snake[0].x,
+        y: snake[0].y
+    }
+    snake.unshift(newHead);
+};
+
+function snakeScore() {
+    canvasContext.font = "18px Arial";
+    canvasContext.fillStyle = "#0095DD";
+    canvasContext.fillText("Score: " + score, 8, 20);
 }
 
-//work on the apple and eating the apple
-//scoring
+
+
+
+
+
+
+
+
+
+
+
 //boarder
 
 
