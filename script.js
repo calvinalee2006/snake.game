@@ -25,8 +25,6 @@ let apple = {
     x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20, y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20
 }
 
-
-
 window.onload = function () {
 
     // look into clearInterval
@@ -42,10 +40,19 @@ window.onload = function () {
         if (wallCheck()) {
             alert("Game Over")
             console.log("Game Over-Hit the wall!")
+            restartGame();
         }
     }, 2500 / framesPerSecond);
 }
 
+
+function restartGame() {
+    snake = [{ x: 200, y: 240 },
+    { x: 180, y: 240 },
+    { x: 160, y: 240 }
+    ];
+    clearInterval(setInterval())
+}
 function drawGameBoard() {
     canvasContext.fillStyle = 'white';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
@@ -55,8 +62,8 @@ function hitSnake() {
     for (let i = 1; i < snake.length; i++) {
         let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
         if (hitBody === true) {
-            alert("game over")
-            console.log("game over");
+            alert("Game Over")
+            console.log("Game Over");
         }
     }
 }
@@ -145,7 +152,6 @@ function snakeEatsApple() {
         }
         score++;
 
-        //Only grows after the second time getting the apple
         let newHead = {
             x: snake[0].x,
             y: snake[0].y
@@ -153,7 +159,6 @@ function snakeEatsApple() {
         snake.push(newHead);
     }
 };
-
 
 function snakeScore() {
     canvasContext.font = "18px Arial";
