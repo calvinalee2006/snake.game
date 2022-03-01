@@ -20,6 +20,8 @@ let snakeDirection = null;
 
 let hitBody = false;
 
+let gameRestart = false;
+
 // Apple
 let apple = {
     x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20, y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20
@@ -36,23 +38,24 @@ window.onload = function () {
         snakeScore()
         snakeEatsApple();
         moveSnake();
+        wallCheck()
         hitSnake();
-        if (wallCheck()) {
-            alert("Game Over")
-            console.log("Game Over-Hit the wall!")
-            restartGame();
-        }
+        restartGame()
     }, 2500 / framesPerSecond);
 }
 
-
 function restartGame() {
-    snake = [{ x: 200, y: 240 },
-    { x: 180, y: 240 },
-    { x: 160, y: 240 }
-    ];
-    clearInterval(setInterval())
+    if (gameRestart === true) {
+        drawGameBoard.reset();
+        snakeScore.rest();
+        drawSnake.reset();
+        snake = [{ x: 200, y: 240 },
+        { x: 180, y: 240 },
+        { x: 160, y: 240 }
+        ];
+    }
 }
+
 function drawGameBoard() {
     canvasContext.fillStyle = 'white';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height)
@@ -62,18 +65,29 @@ function hitSnake() {
     for (let i = 1; i < snake.length; i++) {
         let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
         if (hitBody === true) {
-            alert("Game Over")
-            console.log("Game Over");
+            alert("Game Over, stop hitting yourself!")
         }
     }
 }
 
 function wallCheck() {
+
     const hitLeftWall = snake[0].x < 0;
     const hitRightWall = snake[0].x > canvas.width;
     const hitTopWall = snake[0].y < 0;
     const hitBottomWall = snake[0].y > canvas.height;
-    return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
+    if (hitLeftWall == true) {
+        alert('Game Over, You hit the left wall!')
+    }
+    if (hitRightWall == true) {
+        alert('Game Over, You hit the right wall!!')
+    }
+    if (hitTopWall == true) {
+        alert('Game Over, You hit the top wall!!')
+    }
+    if (hitBottomWall == true) {
+        alert('Game Over, You hit the bottom wall!!')
+    }
 }
 
 function drawSnake() {
