@@ -9,9 +9,10 @@ let tileCount = 20;
 let tileSize = 18;
 
 //Drawing of the snake body
-let snake = [{ x: 200, y: 240 },
-{ x: 180, y: 240 },
-{ x: 160, y: 240 }
+let snake = [
+    { x: 200, y: 240 },
+    { x: 180, y: 240 },
+    { x: 160, y: 240 }
 ];
 
 let snakeLength = [];
@@ -22,14 +23,14 @@ let hitBody = false;
 
 let gameRestart = false;
 
+let myInterval = setInterval(gameOver);
+
 // Apple
 let apple = {
     x: Math.floor((Math.random() * (canvas.width - 20)) / 20) * 20, y: Math.floor((Math.random() * (canvas.height - 20)) / 20) * 20
 }
 
 window.onload = function () {
-
-    // look into clearInterval
     let framesPerSecond = 30;
     setInterval(function () {
         drawGameBoard();
@@ -38,22 +39,10 @@ window.onload = function () {
         snakeScore()
         snakeEatsApple();
         moveSnake();
-        wallCheck()
         hitSnake();
-        restartGame()
+        wallCheck()
+        stopGameFunction()
     }, 2500 / framesPerSecond);
-}
-
-function restartGame() {
-    if (gameRestart === true) {
-        drawGameBoard.reset();
-        snakeScore.rest();
-        drawSnake.reset();
-        snake = [{ x: 200, y: 240 },
-        { x: 180, y: 240 },
-        { x: 160, y: 240 }
-        ];
-    }
 }
 
 function drawGameBoard() {
@@ -63,30 +52,34 @@ function drawGameBoard() {
 
 function hitSnake() {
     for (let i = 1; i < snake.length; i++) {
-        let hitBody = snake[i].x === snake[0].x && snake[i].y === snake[0].y;
+        let hitBody = snake[i].x == snake[0].x && snake[i].y == snake[0].y;
         if (hitBody === true) {
             alert("Game Over, stop hitting yourself!")
+            gameOver()
         }
     }
 }
 
 function wallCheck() {
-
     const hitLeftWall = snake[0].x < 0;
-    const hitRightWall = snake[0].x > canvas.width;
+    const hitRightWall = snake[0].x > canvas.width + 10;
     const hitTopWall = snake[0].y < 0;
-    const hitBottomWall = snake[0].y > canvas.height;
+    const hitBottomWall = snake[0].y > canvas.height + 10;
     if (hitLeftWall == true) {
         alert('Game Over, You hit the left wall!')
+        gameOver()
     }
     if (hitRightWall == true) {
-        alert('Game Over, You hit the right wall!!')
+        alert('Game Over, You hit the right wall!!');
+        gameOver();
     }
     if (hitTopWall == true) {
         alert('Game Over, You hit the top wall!!')
+        gameOver()
     }
     if (hitBottomWall == true) {
         alert('Game Over, You hit the bottom wall!!')
+        gameOver()
     }
 }
 
@@ -178,6 +171,18 @@ function snakeScore() {
     canvasContext.font = "18px Arial";
     canvasContext.fillStyle = "#0095DD";
     canvasContext.fillText("Score: " + score, 8, 20);
+}
+
+function gameOver() {
+    score = 0;
+    snake = [{ x: 200, y: 240 },
+    { x: 180, y: 240 },
+    { x: 160, y: 240 }
+    ];
+}
+
+function stopGameFunction() {
+    clearInterval(myInterval);
 }
 
 
