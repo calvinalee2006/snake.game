@@ -4,7 +4,7 @@
 
 click [here]( https://calvinalee2006.github.io/snake.game/) To see my simple snake game in action!
 
-![calculator](images/Screenshot (30).png)
+![calculator](images/Screenshot(30).png)
 
 ### Summary
 This was another tough project from the Software development mastermind program. It REALLY took me through the ringer and figuring out everything was tough! Finding bugs, using google, late nights, and early morning was what being a developer was all about. All so a snake could chase an apple.  
